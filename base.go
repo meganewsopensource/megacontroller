@@ -1,4 +1,4 @@
-package controller
+package megacontroller
 
 import (
 	"github.com/invopop/jsonschema"
