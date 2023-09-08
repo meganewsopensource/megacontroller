@@ -14,11 +14,14 @@ type H map[string]any
 type Base struct{}
 
 func (u Base) IncorrectSchema(c ResponseJsonParser, entity interface{}) {
-	c.JSON(http.StatusUnprocessableEntity, H{
+	responseBody := H{
 		"status":  "error",
 		"message": "incorrect schema",
-		"schema":  jsonschema.Reflect(entity),
-	})
+	}
+	if entity != nil {
+		responseBody["schema"] = jsonschema.Reflect(entity)
+	}
+	c.JSON(http.StatusUnprocessableEntity, responseBody)
 }
 
 func (u Base) EmptyQueryParameter(c ResponseJsonParser, queryParameter string) {
